@@ -41,7 +41,7 @@ const assetsPath = './src/assets/';
     console.log('Building assets...')
     
     // assets.js file content
-    let buildResult = '/* ' + comment + ' */\n\nconst asssets={';
+    let buildResult = '/* ' + comment + ' */\n\nconst assets={';
 
     for (let i=0; i<files.length; i++) {
         let fileName = path.join(assetsPath, files[i]);
