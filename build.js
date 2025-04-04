@@ -28,16 +28,20 @@ fs.mkdir('./build', {recursive: true}, () => {});
 
 // build assets
 const assetsPath = './src/assets/';
-fs.readdir(assetsPath, (err, files) => {
-    if (err) {
+(function() {
+    let files;
+    try {
+        files = fs.readdirSync(assetsPath);
+    } catch (e) {
         console.error('Could not build assets: error reading directory');
+        console.log('');
         return;
     }
 
     console.log('Building assets...')
     
     // assets.js file content
-    let buildResult = '/*' + comment + '*/\n\nconst asssets={';
+    let buildResult = '/* ' + comment + ' */\n\nconst asssets={';
 
     for (let i=0; i<files.length; i++) {
         let fileName = path.join(assetsPath, files[i]);
@@ -71,20 +75,24 @@ fs.readdir(assetsPath, (err, files) => {
 
     console.log('Built assets (result in ./build/assets.js)');
     console.log('');
-})
+})();
 
 // build javascript
 const jsPath = './src/js';
-fs.readdir(jsPath, (err, files) => {
-    if (err) {
+(function() {
+    console.log('Building js...')
+
+    let files;
+    try {
+        files = fs.readdirSync(jsPath);
+    } catch (e) {
         console.error('Could not build js: error reading directory');
+        console.log('');
         return;
     }
-
-    console.log('Building js...')
     
     // bundle.js file content
-    let buildResult = '/*' + comment + '*/\n\n';
+    let buildResult = '/* ' + comment + ' */\n\n';
 
     for (let i=0; i<files.length; i++) {
         let fileName = path.join(jsPath, files[i]);
@@ -112,4 +120,35 @@ fs.readdir(jsPath, (err, files) => {
 
     console.log('Built js (result in ./build/bundle.js)');
     console.log('');
-})
+})();
+
+// build HTML client
+(function() {
+    console.log('Building client...');
+
+    let assetsString, jsString;
+    try {
+        assetsString = fs.readFileSync('./build/assets.js', {encoding:'utf8'});
+        jsString = fs.readFileSync('./build/bundle.js', {encoding:'utf8'});
+    } catch (e) {
+        console.error('Could not build client: error reading files');
+        console.log('');
+        return;
+    }
+
+    let html = `<!-- ${comment} -->
+<!DOCTYPE html><html><head>
+<title>Loading...</title>
+<script>
+${assetsString}
+</script>
+<script>
+${jsString}
+</script>
+</head><body></body></html>`
+
+    fs.writeFileSync('./build/client.html', html);
+
+    console.log('Built client (result in ./build/client.html)');
+    console.log('');
+})();
