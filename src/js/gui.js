@@ -5,12 +5,21 @@ class GUI {
         app.hub.listen(this);
     }
     onload() {
+        // set title
         GUI.byTag('title')[0].textContent = 'Smart Funge IDE';
+
+        // add icon
         let icon = GUI.create('link');
         icon.rel = 'icon';
         icon.type = 'image/x-icon';
         icon.href = GUI.image('icon.png');
-        document.head.appendChild(icon);
+        GUI.addToHead(icon);
+
+        // add stylesheet
+        let style = GUI.create('style');
+        style.textContent = atob(app.assets['style.css'])
+        GUI.addToHead(style);
+
     }
 
     // DOM HELPERS
@@ -31,10 +40,16 @@ class GUI {
         }
         return el;
     }
+    static addToHead(el) {
+        document.head.appendChild(el);
+    }
+    static addToBody(el) {
+        document.body.appendChild(el);
+    }
 
     // ASSET HELPERS
 
     static image(name) {
-        return 'data:image/png;base64,' + assets[name];
+        return 'data:image/png;base64,' + app.assets[name];
     }
 }
