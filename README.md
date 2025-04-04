@@ -8,4 +8,10 @@ You can't download it becuase it isn't done
 
 ## Build
 
-Build it with 
+Build it with this command:
+
+```
+npm run build
+```
+
+The output will be in build/client.html
