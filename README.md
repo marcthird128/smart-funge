@@ -2,6 +2,10 @@
 
 A web based Befunge IDE
 
-# Dowload
+## Dowload
 
 You can't download it becuase it isn't done
+
+## Build
+
+Build it with 

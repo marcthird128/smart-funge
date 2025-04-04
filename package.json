@@ -1,0 +1,24 @@
+{
+  "name": "smart-funge",
+  "version": "1.0.0",
+  "description": "A web based Befunge IDE",
+  "main": "run.js",
+  "scripts": {
+    "test": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcthird128/smart-funge.git"
+  },
+  "keywords": [
+    "befunge",
+    "ide",
+    "editor"
+  ],
+  "author": "maza",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marcthird128/smart-funge/issues"
+  },
+  "homepage": "https://github.com/marcthird128/smart-funge#readme"
+}
