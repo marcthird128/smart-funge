@@ -42,7 +42,7 @@ const assetsPath = './src/assets/';
     console.log('Building assets...')
     
     // assets.js file content
-    let buildResult = '/* ' + comment + ' */\n\nconst assets={';
+    let buildResult = 'const assets={';
 
     for (let i=0; i<files.length; i++) {
         let fileName = path.join(assetsPath, files[i]);
@@ -121,7 +121,7 @@ const jsPath = './src/js';
     if (minified.error) {
         console.error('Could not build js: minifier error: ' + minified.error);
     }
-    buildResult = '/* ' + comment + ' */\n\n' + minified.code;
+    buildResult = minified.code;
         
     // write build results
     fs.writeFileSync('./build/bundle.js', buildResult);
