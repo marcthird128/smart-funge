@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const uglify = require("uglify-js");
 
 console.log('Smart Funge Build Tools');
 console.log('Building...');
@@ -92,7 +93,7 @@ const jsPath = './src/js';
     }
     
     // bundle.js file content
-    let buildResult = '/* ' + comment + ' */\n\n';
+    let buildResult = '';
 
     for (let i=0; i<files.length; i++) {
         let fileName = path.join(jsPath, files[i]);
@@ -114,6 +115,13 @@ const jsPath = './src/js';
 
         console.log('Built file \'' + files[i] + '\'');
     }
+
+    // minify
+    const minified = uglify.minify(buildResult);
+    if (minified.error) {
+        console.error('Could not build js: minifier error: ' + minified.error);
+    }
+    buildResult = '/* ' + comment + ' */\n\n' + minified.code;
         
     // write build results
     fs.writeFileSync('./build/bundle.js', buildResult);

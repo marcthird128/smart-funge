@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/marcthird128/smart-funge/issues"
   },
-  "homepage": "https://github.com/marcthird128/smart-funge#readme"
+  "homepage": "https://github.com/marcthird128/smart-funge#readme",
+  "dependencies": {
+    "uglify-js": "^3.19.3"
+  }
 }
