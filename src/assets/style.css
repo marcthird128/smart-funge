@@ -1,3 +1,46 @@
 html, body {
+   margin:0;
+   font-family:Arial, Helvetica, sans-serif;
+}
+
+.gui-wrapper {
+    position:absolute;
+    left:0px;
+    right:0px;
+    top:0px;
+    bottom:0px;
+    display:flex;
+    flex-direction: column;
+}
+
+.gui-header {
+    display:flex;
+    background:#eee;
+    border-bottom:1px #ccc solid;
+}
+
+.gui-header > * {
+    margin:5px;
+}
+
+.gui-header-icon {
+    width:24px;
+    height:24px;
+}
+
+.gui-menu-bar {
+    display:flex;
+}
+
+.gui-menu-item {
+    user-select:none;
     background:#ccc;
+    cursor:default;
+    padding:2px 5px;
+    border-radius:3px;
+}
+
+.gui-content {
+    display:flex;
+    flex-grow:1;
 }
