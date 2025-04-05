@@ -79,6 +79,17 @@ class GUIElement {
     }
 }
 
+class GUIImage extends GUIElement {
+    constructor(src, parent) {
+        super();
+
+        this.el = GUI.create('img');
+        this.setParent(parent);
+        this.el.src = src;
+        this.el.draggable = false;
+    }
+}
+
 class GUIMenuTab extends GUIElement {
     constructor(parent) {
         super();
@@ -99,10 +110,11 @@ class GUIMenuTab extends GUIElement {
 }
 
 class GUIMenuItem extends GUIElement {
-    constructor(text, command) {
+    constructor(text, command, parent) {
         super();
 
         this.el = GUI.create('div', 'gui-menu-item');
+        this.setParent(parent);
         this.el.addEventListener('click', () => this.activate());
 
         this.setText(text);
@@ -149,9 +161,8 @@ class GUIHeader extends GUIElement {
         this.el = GUI.create('div', 'gui-header');
         this.setParent(parent);
 
-        this.icon = GUI.create('img', 'gui-header-icon');
-        this.icon.src = GUI.image('icon.png');
-        GUI.add(this.el, this.icon);
+        this.icon = new GUIImage(GUI.image('icon.png'), this);
+        this.icon.el.classList.add('gui-header-icon');
 
         this.menuBar = new GUIMenuBar(this);
     }
@@ -172,7 +183,7 @@ class GUIContent extends GUIElement {
         super();
 
         this.el = GUI.create('div', 'gui-content');
-        this.el.textContent = 'content';
         this.setParent(parent);
+        this.el.textContent = 'content';
     }
 }

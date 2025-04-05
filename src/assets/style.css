@@ -3,6 +3,10 @@ html, body {
    font-family:Arial, Helvetica, sans-serif;
 }
 
+img {
+    user-select:none;
+}
+
 .gui-wrapper {
     position:absolute;
     left:0px;
@@ -41,6 +45,9 @@ html, body {
 }
 .gui-menu-item:hover {
     background:#aaa;
+}
+.gui-menu-item:active {
+    background:#888;
 }
 
 .gui-content {
