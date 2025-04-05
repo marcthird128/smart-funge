@@ -39,6 +39,9 @@ html, body {
     padding:2px 5px;
     border-radius:3px;
 }
+.gui-menu-item:hover {
+    background:#aaa;
+}
 
 .gui-content {
     display:flex;
