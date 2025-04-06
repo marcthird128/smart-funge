@@ -29,8 +29,8 @@ class Hub {
     }
     dispatch(event, data) {
         if (!this.events[event]) return;
-        this.events[event].forEach(handler => {
+        setInterval(() => this.events[event].forEach(handler => {
             handler(data);
-        })
+        }), 0);
     }
 }
