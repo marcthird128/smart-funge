@@ -18,5 +18,5 @@ window.addEventListener('load', function() {
     /* this event will be run
      * after the app is initialized
      * because of changes to hub.js */
-    app.hub.dispatch('load');
+    app.hub.dispatchLater('load');
 });

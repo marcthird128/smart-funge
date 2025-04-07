@@ -60,11 +60,24 @@ class Hub {
     
     /**
      * activates an event and calls all handlers
-     * asyncronously
+     * immediately
      * @param event {string} the event to activate
      * @param data {any} the data to pass to the handlers
      */
     dispatch(event, data) {
+        if (!this.events[event]) return;
+        this.events[event].forEach(handler => {
+            handler(data);
+        });
+    }
+    
+    /**
+     * activates an event and calls all handlers
+     * asyncronously
+     * @param event {string} the event to activate
+     * @param data {any} the data to pass to the handlers
+     */
+    dispatchLater(event, data) {
         if (!this.events[event]) return;
         setInterval(() => this.events[event].forEach(handler => {
             handler(data);

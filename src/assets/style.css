@@ -3,7 +3,11 @@ html, body {
    font-family:Arial, Helvetica, sans-serif;
 }
 
-img {
+.hidden {
+    display:none;
+}
+
+.gui-image {
     user-select:none;
 }
 
@@ -36,21 +40,54 @@ img {
     display:flex;
 }
 
+.gui-menu-bar > .gui-menu-item {
+    margin-right:5px;
+}
+
 .gui-menu-item {
     user-select:none;
+    white-space:nowrap;
+}
+
+.gui-menu-tab {
+    position:relative;
+    display:flex;
+}
+
+.gui-menu-tab-dropdown {
+    position:absolute;
+    top:100%;
+    left:0px;
+    background:#ccc;
+    padding:5px;
+    border-radius:5px;
+    z-index:10;
+    box-shadow:1px 1px 4px 2px #00000020;
+}
+
+.gui-menu-button {
+    padding:2px 5px;
     background:#ccc;
     cursor:default;
-    padding:2px 5px;
     border-radius:3px;
 }
-.gui-menu-item:hover {
+.gui-menu-button:hover {
     background:#aaa;
 }
-.gui-menu-item:active {
+.gui-menu-button:active {
     background:#888;
 }
 
 .gui-content {
     display:flex;
     flex-grow:1;
+}
+
+.gui-backdrop {
+    position:absolute;
+    left:0px;
+    right:0px;
+    top:0px;
+    bottom:0px;
+    z-index:5;
 }

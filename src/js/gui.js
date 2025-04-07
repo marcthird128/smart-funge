@@ -31,6 +31,13 @@ class GUI {
         let style = GUI.create('style');
         style.textContent = atob(app.assets['style.css'])
         GUI.addToHead(style);
+        
+        // add backdrop
+        app.backdrop = GUI.create('div', 'gui-backdrop', 'hidden');
+        app.backdrop.addEventListener('click', () => app.hub.dispatch('menuclose'));
+        app.hub.addListener('menuopen', () => app.backdrop.classList.remove('hidden'));
+        app.hub.addListener('menuclose', () => app.backdrop.classList.add('hidden'));
+        GUI.addToBody(app.backdrop);
     }
 
     /**
@@ -197,6 +204,8 @@ class GUIImage extends GUIElement {
 class GUIText extends GUIElement {
     /**
      * creates a new GUIText
+     * @param text {string} the text content
+     * @param parent {GUIElement?} optional parent element
      */
     constructor(text, parent) {
         super();
@@ -266,18 +275,106 @@ class GUIMenuItem extends GUIElement {
 }
 
 /**
+ * the dropdown when you activate a menu tab
+ */
+class GUIMenuTabDropdown extends GUIElement {
+    /**
+     * creates a new GUIMenuTabDropdown
+     * @param parent {GUIElement?} optional parent element
+     */
+    constructor(parent) {
+        super();
+        
+        this.el = GUI.create('div', 'gui-menu-tab-dropdown', 'hidden');
+        this.setParent(parent);
+        
+        app.hub.addListener('menuclose', () => this.hide());
+        
+        this.hidden = true;
+    }
+    
+    /**
+     * hides the dropdown
+     */
+    hide() {
+        this.el.classList.add('hidden');
+        this.hidden = true;
+    }
+    
+    /**
+     * shows the dropdown
+     */
+    show() {
+        this.el.classList.remove('hidden');
+        this.hidden = false;
+    }
+    
+    /**
+     * toggles dropdown state
+     */
+    toggle() {
+        if (this.hidden) this.show()
+        else this.hide();
+    }
+}
+
+/**
  * a menu tab (menu button that has child items)
  */
-class GUIMenuTab extends GUIMenuItem {
+class GUIMenuTab extends GUIElement {
     /**
      * creates a new GUIMenuTab
      * @param text {string} text content
      * @param parent {GUIElement?} optional parent element
      */
     constructor(text, parent) {
-        super(text, parent);
+        super();
         
-        this.el.classList.add('gui-menu-tab');
+        this.el = GUI.create('div', 'gui-menu-item', 'gui-menu-tab');
+        this.setParent(parent);
+        
+        this.tabs = new Set();
+        
+        this.dropdown = new GUIMenuTabDropdown(this);
+        
+        this.button = new GUIMenuButton(text, '_');
+        super.addChild(this.button);
+        
+        this.button.el.addEventListener('click', () => this.activate());
+    }
+    
+    /**
+     * adds a child
+     * @param child {GUIElement} child to add
+     */
+    addChild(child) {        
+        if (child instanceof GUIMenuItem) {
+             if (child instanceof GUIMenuTab) this.tabs.add(child);
+             this.dropdown.addChild(child);
+        } else {
+            super.addChild(child);
+        }
+    }
+    
+    /**
+     * removes a child
+     * @param child {GUIElement} child to remove
+     */
+    removeChild(child) {
+        if (child instanceof GUIMenuItem) {
+            if (child instanceof GUIMenuTab) this.tabs.remove(child);
+            this.dropdown.removeChild(child);
+        } else {
+            super.removeChild(child);
+        }
+    }
+    
+    /**
+     * activate this menu tab
+     */
+    activate() {
+        this.dropdown.toggle();
+        app.hub.dispatch(this.dropdown.hidden ? 'menuclose' : 'menuopen');
     }
 }
 
@@ -321,6 +418,7 @@ class GUIMenuButton extends GUIMenuItem {
      */
     activate() {
         app.hub.dispatch('command', this.command);
+        app.hub.dispatch('menuclose');
     }
 }
 
@@ -379,7 +477,11 @@ class GUIMenuBar extends GUIElement {
         this.el = GUI.create('div', 'gui-menu-bar');
         this.setParent(parent);
 
-        new GUIMenuButton('Exit', 'exit', this);
+        this.fileTab = new GUIMenuTab('File', this);
+        new GUIMenuButton('New...', 'new', this.fileTab);
+        new GUIMenuButton('Open Recent...', 'recent-dialog', this.fileTab);
+        
+        this.editTab = new GUIMenuButton('Edit', 'exit', this);
     }
 }
 
