@@ -374,7 +374,7 @@ class GUIMenuTab extends GUIElement {
      */
     activate() {
         this.dropdown.toggle();
-        app.hub.dispatch(this.dropdown.hidden ? 'menuclose' : 'menuopen');
+        app.hub.dispatch('menuopen');
     }
 }
 
