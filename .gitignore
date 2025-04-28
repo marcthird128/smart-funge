@@ -1,6 +1,3 @@
-# Builds
-build/*
-
 # npm modules
 node_modules/*
 
