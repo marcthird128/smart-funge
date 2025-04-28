@@ -3,3 +3,6 @@ node_modules/*
 
 # vscode configs
 .vscode/*
+
+# Builds
+build/*
