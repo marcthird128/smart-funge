@@ -1,11 +1,10 @@
 {
   "name": "smart-funge",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A web based Befunge IDE",
-  "main": "test.js",
+  "main": "src/app.js",
   "scripts": {
-    "build": "node build.js",
-    "test": "node test.js"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
