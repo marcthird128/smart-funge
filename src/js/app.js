@@ -1,17 +1,19 @@
-/* Smart Funge befunge IDE
- * Main entry point
+/* Smart Funge befunge IDE version 0.0.1
+ * App object container
  */
 
-// import the required modules
-const gui = require('./gui.js');
-const engine = require('./engine.js');
-
-// make the app
+// create the app object
+// and initialize it with
+// default values
 const app = {
-    loaded: false,
-    version: '0.0.1'
-}
+    loaded: false, // whether Smart Funge has been loaded
+    debug: false, // debug mode, provides better errors and stuff
+    assets: {}, // assets object
+};
 
-module.exports = {
-    app, // export the app object
-}
+// just export the app object
+// since modules are not run
+// twice, all modules importing
+// this file will reference the 
+// same object
+module.exports = app;

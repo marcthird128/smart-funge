@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   entry: () => {
     const entries = {};
-    entries['bundle'] = './src/js/app.js';
+    entries['bundle'] = './src/js/main.js';
     return entries;
   },
   output: {
