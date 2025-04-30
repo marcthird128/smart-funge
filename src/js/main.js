@@ -2,21 +2,29 @@
  * Main entry point
  */
 
-// first, get the global
-// app object
-const app = require('./app.js');
+// main function just
+// in case we dont want to
+// start instantly
+// MUST RUN AFTER WINDOW LOAD
+function main() {
+    // if its already loaded
+    // then dont do it again
+    if (window.loaded) return;
 
-// then load the config
-require('./config.js');
-app.config.default();
-app.config.override();
-app.config.save();
+    // first, get the global
+    // app object
+    const app = require('./app.js');
 
-// put it in global var
-window.app = app;
+    // then load the config
+    require('./config.js');
+    app.config.default();
+    app.config.override();
+    app.config.load();
+    app.config.save();
 
-// when the window loads:
-window.addEventListener('load', () => {
+    // put it in global var
+    window.app = app;
+
     // load assets
     const loader = require('./loader.js');
     loader.load();
@@ -61,4 +69,11 @@ window.addEventListener('load', () => {
         // test
         document.body.innerHTML = '<span>Done</span>';
     });
-});
+
+    // delete window main
+    // object so it wont
+    // get called again (hopefully)
+    window.main = () => console.warn('Main called twice!');
+}
+
+window.main = main;

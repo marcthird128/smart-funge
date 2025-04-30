@@ -32,7 +32,6 @@ loader.promise = new Promise(res => {
 function check() {
     if (loader.progress == loader.total) {
         loader.complete = true;
-        app.loaded = true;
         resolve();
 
         return true;
