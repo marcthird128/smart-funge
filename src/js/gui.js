@@ -30,12 +30,8 @@ gui.init = function() {
     // first, clear body
     document.body.innerHTML = '';
 
-    // set title and icon
+    // set title
     document.title = 'Smart Funge';
-    let iconLink = document.createElement('link');
-    iconLink.rel = 'icon';
-    iconLink.href = app.assets['icon'].src;
-    document.head.appendChild(iconLink);
 }
 
 // set the app gui property

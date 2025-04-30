@@ -81,7 +81,7 @@ function loadAsset(asset) {
         img.src = path;
 
         img.onload = () => {
-            utils.log(`Loaded image asset ${name} from ${path}`);
+            utils.debug(`Loaded image asset ${name} from ${path}`);
             app.assets[name] = img;
             loader.progress++;
             check();
