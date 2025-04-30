@@ -13,6 +13,10 @@ const app = require('./app.js');
 const assets = [
     {name: 'style', type: 'text', path: 'assets/style.css'},
     {name: 'icon', type: 'image', path: 'assets/icon.png'},
+    {name: 'circle-arrow-right', type: 'image', path: 'assets/circle-arrow-right.svg'},
+    {name: 'circle-play', type: 'image', path: 'assets/circle-play.svg'},
+    {name: 'circle-pause', type: 'image', path: 'assets/circle-pause.svg'},
+    {name: 'circle-stop', type: 'image', path: 'assets/circle-stop.svg'},
 ]
 
 // loading object

@@ -9,11 +9,17 @@
 function main() {
     // if its already loaded
     // then dont do it again
-    if (window.loaded) return;
+    if (window.loaded) {
+        console.warn('Main called twice!');
+        return;
+    }
 
     // first, get the global
     // app object
     const app = require('./app.js');
+
+    // put it in global var
+    window.app = app;
 
     // then load the config
     require('./config.js');
@@ -21,9 +27,6 @@ function main() {
     app.config.override();
     app.config.load();
     app.config.save();
-
-    // put it in global var
-    window.app = app;
 
     // load assets
     const loader = require('./loader.js');
@@ -51,7 +54,7 @@ function main() {
 
                 // update DOM
                 strip.style.width = `${percent}%`;
-                text.innerText = `${percent}%`;
+                text.innerText = `${Math.floor(percent)}%`;
             }
         }
 
@@ -62,17 +65,21 @@ function main() {
         frame();
     })();
 
-    // wait for the assets to load
+    // ------------------
+    //      ONLOAD
+    // ------------------
     loader.promise.then(() => {
+        // init gui
+        let gui = require('./gui.js');
+        gui.init();
 
-        // done!
-        // test
-        document.body.innerHTML = '<span>Done</span>';
+        // loaded
+        app.loaded = true;
     });
 
     // delete window main
     // object so it wont
-    // get called again (hopefully)
+    // get called again
     window.main = () => console.warn('Main called twice!');
 }
 
