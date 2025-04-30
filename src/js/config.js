@@ -1,6 +1,9 @@
 /* Smart Funge befunge IDE version 0.0.1
- * Main entry point
+ * Configuration handling
  */
+
+// utils
+const utils = require('./utils.js');
 
 // config object
 const config = {
@@ -37,7 +40,7 @@ config.save = function() {
     // if localStorage doesnt exist
     // then we cant do this
     if (!window.localStorage) {
-        console.warn('No local storage but config.saveLocally enabled');
+        utils.warn('No local storage but config.saveLocally enabled');
         return;
     }
 
@@ -46,7 +49,7 @@ config.save = function() {
     try {
         string = JSON.stringify(config.object);
     } catch (e) {
-        throw new Error('Could not convert config to JSON: ' + e.message);
+        utils.severe('Could not convert config to JSON: ' + e.message);
     }
 
     // save
@@ -58,7 +61,7 @@ config.load = function() {
     // if localStorage doesnt exist
     // then we cant do this
     if (!window.localStorage) {
-        console.warn('No local storage but config.saveLocally enabled');
+        utils.warn('No local storage but config.saveLocally enabled');
         return;
     }
 
@@ -67,7 +70,7 @@ config.load = function() {
     try {
         object = JSON.parse(window.localStorage.getItem('smartFungeConfig'));
     } catch (e) {
-        throw new Error('Could not load config from local storage: ' + e.message);
+        utils.severe('Could not load config from local storage: ' + e.message);
     }
     
     // load

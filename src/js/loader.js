@@ -2,6 +2,9 @@
  * Loads assets and/or modules
  */
 
+// utils
+const utils = require('./utils.js');
+
 // this file is required once
 // and all assets will be loaded
 // into the app object
@@ -58,19 +61,19 @@ function loadAsset(asset) {
                     // resolved
                     // and the app won't load
                     // TODO: add user notification of error
-                    throw new Error(`Could not load text asset ${name} from ${path}: ${res.status} ${res.statusText}`);
+                    utils.severe(`Could not load text asset ${name} from ${path}: ${res.status} ${res.statusText}`);
                 }
 
                 return res.text();
             })
             .then(text => {
-                console.log(`Loaded text asset ${name} from ${path}`);
+                utils.log(`Loaded text asset ${name} from ${path}`);
                 app.assets[name] = text;
                 loader.progress++;
                 check();
             })
             .catch(error => {
-                throw new Error(`Could not load text asset ${name} from ${path}: ${error.message}`);
+               utils.error(`Could not load text asset ${name} from ${path}: ${error.message}`);
             })
     } else if (type == 'image') {
         // load the image
@@ -78,13 +81,13 @@ function loadAsset(asset) {
         img.src = path;
 
         img.onload = () => {
-            console.log(`Loaded image asset ${name} from ${path}`);
+            utils.log(`Loaded image asset ${name} from ${path}`);
             app.assets[name] = img;
             loader.progress++;
             check();
         }
         img.onerror = () => {
-            throw new Error(`Could not load image asset ${name} from ${path}`);
+            utils.error(`Could not load image asset ${name} from ${path}`);
         }
     }
 }

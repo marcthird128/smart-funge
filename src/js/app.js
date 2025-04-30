@@ -9,6 +9,7 @@ const app = {
     loaded: false, // whether Smart Funge has been loaded
     debug: false, // debug mode, provides better errors and stuff
     assets: {}, // assets object
+    config: {object: {}} // in case config isnt loaded
 };
 
 // just export the app object

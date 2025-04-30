@@ -2,6 +2,9 @@
  * Graphical user interface
  */
 
+// utils
+const utils = require('./utils.js');
+
 // uses Google Material Icons
 // for the icons
 
@@ -20,7 +23,7 @@ const gui = {
 gui.init = function() {
     // make sure the app isn't loaded
     if (app.loaded) {
-        console.warn('gui.init called twice!');
+        utils.warn('gui.init called twice!');
         return;
     }
 

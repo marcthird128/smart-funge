@@ -2,17 +2,26 @@
  * Main entry point
  */
 
+// utils
+const utils = require('./utils.js');
+
 // main function just
 // in case we dont want to
 // start instantly
 // MUST RUN AFTER WINDOW LOAD
-function main() {
+async function main() {
     // if its already loaded
     // then dont do it again
     if (window.loaded) {
-        console.warn('Main called twice!');
+        utils.warn('Main called twice!');
         return;
     }
+
+    // app starting
+    utils.log('====================');
+    utils.log('Starting Smart Funge');
+    utils.log('====================');
+    utils.log();
 
     // first, get the global
     // app object
@@ -27,8 +36,10 @@ function main() {
     app.config.override();
     app.config.load();
     app.config.save();
+    utils.log('Config loaded sucessfully');
 
     // load assets
+    utils.log('Loading assets...');
     const loader = require('./loader.js');
     loader.load();
 
@@ -65,22 +76,32 @@ function main() {
         frame();
     })();
 
-    // ------------------
-    //      ONLOAD
-    // ------------------
-    loader.promise.then(() => {
-        // init gui
-        let gui = require('./gui.js');
-        gui.init();
+    // wait for them to load
+    await loader.promise;
+    utils.log('Assets loaded sucessfully');
 
-        // loaded
-        app.loaded = true;
-    });
+    // ------------------
+    //   ON ASSET LOAD
+    // ------------------
+
+    // initialize GUI
+    utils.log('Initializing GUI...');
+    const gui = require('./gui.js');
+    gui.init();
+    utils.log('GUI initialized sucessfully');
+
+    // everything initialized!
+    app.loaded = true;
+    utils.log();
+    utils.log('==============================');
+    utils.log('Smart Funge loaded sucessfully');
+    utils.log('==============================');
+    utils.log();
 
     // delete window main
     // object so it wont
     // get called again
-    window.main = () => console.warn('Main called twice!');
+    window.main = () => utils.warn('Main called twice!');
 }
 
 window.main = main;
