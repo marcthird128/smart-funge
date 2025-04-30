@@ -67,7 +67,7 @@ function loadAsset(asset) {
                 return res.text();
             })
             .then(text => {
-                utils.log(`Loaded text asset ${name} from ${path}`);
+                utils.debug(`Loaded text asset ${name} from ${path}`);
                 app.assets[name] = text;
                 loader.progress++;
                 check();
