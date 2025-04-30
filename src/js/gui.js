@@ -17,8 +17,6 @@ const gui = {
 
 }
 
-// helper: turn image 
-
 // initializer
 gui.init = function() {
     // make sure the app isn't loaded
