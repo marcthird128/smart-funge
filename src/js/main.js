@@ -6,9 +6,11 @@
 // app object
 const app = require('./app.js');
 
-// ofc getting the config
-// happens second
-// but imma do that later
+// then load the config
+require('./config.js');
+app.config.default();
+app.config.override();
+app.config.save();
 
 // put it in global var
 window.app = app;
@@ -19,26 +21,38 @@ window.addEventListener('load', () => {
     const loader = require('./loader.js');
     loader.load();
 
-    // effect
-    let loadInterval;
+    // ---------------------------------
+    //     LOADING EFFECT
+    // ----------------------------------
+    (() => {
+        // interval ID
+        let interval = -1;
 
-    // one effect iteration
-    function tellUser() {
-        if (loader.complete) {
-            clearInterval(loadInterval);
-        } else {
-            // for now
-            const percent = loader.progress / loader.total * 100;
+        // loading elements
+        const text = document.getElementById('loading-text');
+        const strip = document.getElementById('loading-strip');
 
-            document.body.innerHTML = `<span>Loading... ${percent}%, ${loader.progress}/${loader.total}</span>`;
+        // one effect iteration
+        function frame() {
+            if (loader.complete) {
+                // on finish
+                clearInterval(interval);
+            } else {
+                // percent
+                const percent = loader.progress / loader.total * 100;
+
+                // update DOM
+                strip.style.width = `${percent}%`;
+                text.innerText = `${percent}%`;
+            }
         }
-    }
 
-    // run every 10th second
-    loadInterval = setInterval(tellUser, 100);
+        // run every 10th second
+        loadInterval = setInterval(frame, 100);
 
-    // initial effect iteration
-    tellUser();
+        // initial effect iteration
+        frame();
+    })();
 
     // wait for the assets to load
     loader.promise.then(() => {
